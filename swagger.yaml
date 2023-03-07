@@ -36,6 +36,36 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction API
+      description: API for creating an user's transaction
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Transaction payload
+          required: true
+          schema:
+            $ref: '#/definitions/Transaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User's transaction created successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '401':
+          description: Not Authorized
+        '500':
+          description: Internal Server Error
   /me/transactions/{transactionId}:
     get:
       security:
@@ -66,41 +96,6 @@ paths:
           description: Not Authorized
         '404':
           description: Not Found
-        '500':
-          description: Internal Server Error
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: Transaction API
-      description: API for creating an user's transaction
-      parameters:
-        - in: header
-          type: string
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - in: path
-          type: string
-          name: transactionId
-          description: Transaction ID to fetch
-          required: true
-        - in: body
-          name: body
-          description: Transaction payload
-          required: true
-          schema:
-            $ref: '#/definitions/Transaction'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User's transaction created successfully
-          schema:
-            $ref: '#/definitions/Transaction'
-        '401':
-          description: Not Authorized
         '500':
           description: Internal Server Error
     patch:
